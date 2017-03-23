@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://art/environment/tile_dusty_dirt.png" type="Texture" id=1]
+[ext_resource path="res://art/environment/tile_fence_dusty_dirt.png" type="Texture" id=2]
+[ext_resource path="res://art/environment/tile_sign_bottom_dusty_dirt.png" type="Texture" id=3]
+[ext_resource path="res://art/environment/tile_sign_top.png" type="Texture" id=4]
+[ext_resource path="res://art/environment/tile_fence.png" type="Texture" id=5]
+[ext_resource path="res://art/environment/tile_sign_bottom.png" type="Texture" id=6]
+
+[node name="root" type="Node2D"]
+
+[node name="dusty_ground" type="Sprite" parent="."]
+
+transform/pos = Vector2( 50, 50 )
+texture = ExtResource( 1 )
+
+[node name="fence_dusty_ground" type="Sprite" parent="."]
+
+transform/pos = Vector2( 160, 50 )
+transform/rot = 1.13697
+texture = ExtResource( 2 )
+
+[node name="sign_bottom_dusty_dirt" type="Sprite" parent="."]
+
+transform/pos = Vector2( 270, 50 )
+texture = ExtResource( 3 )
+
+[node name="sign_top" type="Sprite" parent="."]
+
+transform/pos = Vector2( 380, 50 )
+texture = ExtResource( 4 )
+
+[node name="fence" type="Sprite" parent="."]
+
+transform/pos = Vector2( 490, 50 )
+texture = ExtResource( 5 )
+
+[node name="sign_bottom" type="Sprite" parent="."]
+
+transform/pos = Vector2( 600, 50 )
+texture = ExtResource( 6 )
+
+
