@@ -4,11 +4,41 @@
 
 [sub_resource type="GDScript" id=1]
 
-script/source = "extends Node2D\n\nvar sample_player = null\nvar bullet_scene = null\nvar exhaust_scene = null\n\nfunc _enter_tree():\n\tglobal.player.connect(\"shot_fired\", self, \"on_player_shot_fired\")\n\tsample_player = get_node(\"sample_player\")\n\tbullet_scene = load(\"res://scenes/effects/weapons/bullet.tscn\")\n\texhaust_scene = load(\"res://scenes/effects/weapons/exhaust.tscn\")\n\nfunc on_player_shot_fired(start, end, victim):\n\tsample_player.play(\"gunshot\")\n\t\n\t#Add bullet effect\n\tvar new_bullet = bullet_scene.instance()\n\tnew_bullet.set_pos(start)\n\tnew_bullet.shot_end = end\n\tadd_child(new_bullet)\n\t\n\t#Add weapon exaust effect\n\tvar new_exhaust = exhaust_scene.instance()\n\tnew_exhaust.set_pos(start)\n\tnew_exhaust.look_at(end)\n\tadd_child(new_exhaust)"
+script/source = "extends Node2D
+
+var sample_player = null
+var bullet_scene = null
+var exhaust_scene = null
+
+func _enter_tree():
+	global.player.connect(\"shot_fired\", self, \"on_player_shot_fired\")
+	sample_player = get_node(\"sample_player\")
+	bullet_scene = load(\"res://scenes/effects/weapons/bullet.tscn\")
+	exhaust_scene = load(\"res://scenes/effects/weapons/exhaust.tscn\")
+
+func on_player_shot_fired(start, end, victim):
+	sample_player.play(\"gunshot\")
+	
+	#Add bullet effect
+	var new_bullet = bullet_scene.instance()
+	new_bullet.set_pos(start)
+	new_bullet.shot_end = end
+	add_child(new_bullet)
+	
+	#Add weapon exaust effect
+	var new_exhaust = exhaust_scene.instance()
+	new_exhaust.set_pos(start)
+	new_exhaust.look_at(end)
+	add_child(new_exhaust)"
 
 [sub_resource type="SampleLibrary" id=2]
 
-samples/gunshot = { "db":0.0, "pitch":1.0, "sample":ExtResource( 1 ) }
+samples/gunshot = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 1 )
+}
 
 [node name="root" type="Node2D"]
 

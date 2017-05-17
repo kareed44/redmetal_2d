@@ -178,12 +178,12 @@ func _fixed_process(delta):
 	if (crosshair_pos != null):
 		weapon_arm_root.look_at(crosshair_pos)
 	if (shot_triggered):
+		shot_triggered = false
 		if (ammo > 0):
 			var shot_start = weapon_arm_hand.get_global_pos()
 			var space_state = get_world_2d().get_direct_space_state()
 			var shot_result = space_state.intersect_ray(shot_start, crosshair_pos, [ self ])
 			emit_signal(\"shot_fired\", shot_start, crosshair_pos, shot_result)
-			shot_triggered = false
 			update_attributes(health, ammo - 1, special)
 
 ######################
