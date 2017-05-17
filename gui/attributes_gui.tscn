@@ -2,11 +2,40 @@
 
 [ext_resource path="res://gui/fonts/western.fnt" type="BitmapFont" id=1]
 
-
-
 [sub_resource type="GDScript" id=1]
 
-script/source = "extends VBoxContainer\n\n#Player reference\nvar player = null\n\n#Progress bars\nvar health_bar = null\nvar ammo_bar = null\nvar special_bar = null\n\nfunc _enter_tree():\n\tplayer = global.player\n\tplayer.connect(\"attributes_updated\", self, \"on_player_attributes_updated\")\n\t\n\thealth_bar = get_node(\"health_container/bar\")\n\tammo_bar = get_node(\"ammo_container/bar\")\n\tspecial_bar = get_node(\"special_container/bar\")\n\nfunc on_player_attributes_updated(health, ammo, special):\n\thealth_bar.set_val(health)\n\tammo_bar.set_val(ammo)\n\tspecial_bar.set_val(special)\n\tupdate()"
+script/source = "extends VBoxContainer
+
+#Player reference
+var player = null
+
+#Progress bars
+var health_bar = null
+var ammo_bar = null
+var special_bar = null
+
+#Weapons labels
+var pistol_label = null
+
+func _enter_tree():
+	player = global.player
+	player.connect(\"attributes_updated\", self, \"on_player_attributes_updated\")
+	player.connect(\"pistol_updated\", self, \"on_player_pistol_updated\")
+	
+	health_bar = get_node(\"health_container/bar\")
+	ammo_bar = get_node(\"ammo_container/bar\")
+	special_bar = get_node(\"special_container/bar\")
+	pistol_label = get_node(\"pistol_container/value\")
+
+func on_player_attributes_updated(health, ammo, special):
+	health_bar.set_val(health)
+	ammo_bar.set_val(ammo)
+	special_bar.set_val(special)
+	update()
+
+func on_player_pistol_updated(pistol):
+	pistol_label.set_text(pistol.name)
+	update()"
 
 [node name="outer_container" type="VBoxContainer"]
 
@@ -89,7 +118,6 @@ percent/visible = true
 
 [node name="ammo_container" type="HBoxContainer" parent="."]
 
-editor/display_folded = true
 rect/min_size = Vector2( 190, 25 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
@@ -153,7 +181,6 @@ percent/visible = false
 
 [node name="special_container" type="HBoxContainer" parent="."]
 
-editor/display_folded = true
 rect/min_size = Vector2( 190, 25 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
@@ -216,5 +243,125 @@ range/value = 1.0
 range/exp_edit = false
 range/rounded = false
 percent/visible = true
+
+[node name="pistol_container" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 87.0
+margin/right = 190.0
+margin/bottom = 112.0
+alignment = 0
+
+[node name="label" type="Label" parent="pistol_container"]
+
+rect/min_size = Vector2( 45, 25 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 45.0
+margin/bottom = 25.0
+custom_fonts/font = ExtResource( 1 )
+text = "Pistol"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="separator" type="VSeparator" parent="pistol_container"]
+
+rect/min_size = Vector2( 3, 25 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 49.0
+margin/top = 0.0
+margin/right = 52.0
+margin/bottom = 25.0
+
+[node name="value" type="Label" parent="pistol_container"]
+
+rect/min_size = Vector2( 100, 20 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 56.0
+margin/top = 2.0
+margin/right = 156.0
+margin/bottom = 23.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.144608, 0.0296631, 0.949219, 1 )
+text = "None"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="rifle_container" type="HBoxContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 116.0
+margin/right = 190.0
+margin/bottom = 141.0
+alignment = 0
+
+[node name="label" type="Label" parent="rifle_container"]
+
+rect/min_size = Vector2( 45, 25 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 45.0
+margin/bottom = 25.0
+custom_fonts/font = ExtResource( 1 )
+text = "Rifle"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="separator" type="VSeparator" parent="rifle_container"]
+
+rect/min_size = Vector2( 3, 25 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 49.0
+margin/top = 0.0
+margin/right = 52.0
+margin/bottom = 25.0
+
+[node name="value" type="Label" parent="rifle_container"]
+
+rect/min_size = Vector2( 100, 20 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 56.0
+margin/top = 2.0
+margin/right = 156.0
+margin/bottom = 23.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.144608, 0.0296631, 0.949219, 1 )
+text = "None"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://art/weapons/bullet.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends KinematicBody2D\n\n#State tracking\nvar shot_end = null\nvar total_shot_distance = null\nvar remaining_shot_distance = null\n\nfunc _enter_tree():\n\tset_process(true)\n\ttotal_shot_distance = get_pos().distance_to(shot_end)\n\nfunc _process(delta):\n\tremaining_shot_distance = get_pos().distance_to(shot_end)\n\tif (remaining_shot_distance > 5):\n\t\tvar speed_ratio = total_shot_distance/remaining_shot_distance\n\t\tmove((shot_end - get_pos()) * delta * 3 * speed_ratio)\n\t\tlook_at(shot_end)\n\telse:\n\t\tqueue_free()"
+
+[node name="kinematic_body" type="KinematicBody2D"]
+
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = SubResource( 1 )
+
+[node name="bullet" type="Sprite" parent="."]
+
+transform/rot = 90.0
+texture = ExtResource( 1 )
+
+

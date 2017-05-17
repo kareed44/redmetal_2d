@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="derek_misc.svg"
+   sodipodi:docname="little_pony.svg"
    inkscape:export-filename="/home/rcreed/Development/Godot/RedMetal/derek_head.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -29,7 +29,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
-     inkscape:cx="8.0191221"
+     inkscape:cx="14.626265"
      inkscape:cy="14.035099"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -128,18 +128,18 @@
        id="rect3541"
        width="9.7253323"
        height="6.8110809"
-       x="7.4550252"
-       y="1034.2206" />
+       x="7.588954"
+       y="1036.4081" />
     <rect
-       y="1034.1964"
-       x="17.430841"
+       y="1036.3839"
+       x="17.56477"
        height="2.3058751"
        width="11.916555"
        id="rect4362"
        style="opacity:1;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.08751953;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <path
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       d="m 2.7232143,1035.9337 -1.5625,4.9107 -0.7589286,6.7856 7.2767857,-0.089 -0.625,-6.6071 0.044643,-6.6073 z"
+       d="m 2.8571429,1038.1212 -1.5625,4.9107 -0.75892863,6.7856 7.27678573,-0.089 -0.625,-6.6071 0.044643,-6.6073 z"
        id="path4364"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc" />
