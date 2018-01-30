@@ -3,8 +3,6 @@
 [ext_resource path="res://gui/status_gui.gd" type="Script" id=1]
 [ext_resource path="res://gui/fonts/western.fnt" type="BitmapFont" id=2]
 
-
-
 [node name="outer_container" type="VBoxContainer"]
 
 rect/min_size = Vector2( 200, 100 )
@@ -14,7 +12,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 200.0
+margin/right = 317.0
 margin/bottom = 100.0
 alignment = 0
 script/script = ExtResource( 1 )
@@ -28,10 +26,10 @@ size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 200.0
+margin/right = 317.0
 margin/bottom = 100.0
 custom_fonts/font = ExtResource( 2 )
-align = 2
+custom_colors/font_color = Color( 0.96875, 0.0113525, 0.0113525, 1 )
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = 10

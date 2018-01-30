@@ -7,11 +7,18 @@
 
 script/source = "extends Sprite
 
+var player = null
+
+var pickup_amout = 10;
+
+func _enter_tree():
+	player = global.player
+
 func _ready():
 	get_node(\"collider\").connect(\"body_enter\", self, \"_on_collider_body_enter\")
 
 func _on_collider_body_enter(body):
-	global.player.ammo = global.player.ammo + 15
+	player.update_attributes(player.health, player.ammo + pickup_amout, player.pistol.ammo_in_clip, player.special)
 	queue_free()
 "
 
@@ -53,6 +60,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision/layers = 4
 
 [node name="collider_shape" type="CollisionShape2D" parent="collider"]
 

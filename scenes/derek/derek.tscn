@@ -23,7 +23,7 @@ height = 99.1925
 script/source = "extends KinematicBody2D
 
 # Locomotion constants
-const GRAVITY = 500
+const GRAVITY = 650
 const MAX_WALK_SPEED = 200
 const WALK_ACCEL = 20
 const JUMP_ACCEL = 275
@@ -41,6 +41,7 @@ var facing = \"right\"
 var sliding = false
 var crosshair_pos = null
 var shot_triggered = false
+var reload_triggered = false
 
 # Weapon arm
 var weapon_arm_root = null
@@ -49,7 +50,7 @@ var weapon_arm_hand = null
 #Signals
 signal shot_fired
 signal attributes_updated
-signal pistol_updated
+signal pistol_equipped
 
 #Attributes
 var health = 100
@@ -69,14 +70,14 @@ func _enter_tree():
 func _ready():
 	set_fixed_process(true)
 	set_process_input(true)
-	emit_signal(\"attributes_updated\", health, ammo, special)
 	
 	#TEMPORARY
-	#pistol = load(\"res://scenes/weapons/pistol.tscn\").instance()
-	#pistol.set_pos(weapon_arm_hand.get_pos())
-	#pistol.set_rot(155)
-	#weapon_arm_hand.add_child(pistol)
-	#emit_signal(\"pistol_updated\", pistol)
+	pistol = load(\"res://scenes/weapons/pistol.tscn\").instance()
+	pistol.set_pos(weapon_arm_hand.get_pos())
+	pistol.set_rot(155)
+	weapon_arm_hand.add_child(pistol)
+	emit_signal(\"pistol_equipped\", pistol)
+	emit_signal(\"attributes_updated\", health, ammo, pistol.ammo_in_clip, special)
 
 func _input(event):
 	if (event.type == InputEvent.MOUSE_MOTION):
@@ -89,6 +90,7 @@ func _input(event):
 
 	if (event.type == InputEvent.KEY):
 		jump_triggered = event.is_action_pressed(\"ui_accept\") && !jumping
+		reload_triggered = event.is_action_pressed(\"ui_reload\")
 
 func _fixed_process(delta):
 	var moving_left = Input.is_action_pressed(\"ui_left\")
@@ -134,7 +136,7 @@ func _fixed_process(delta):
 	######################
 	if (!jumping && !moving_left && !moving_right && abs(velocity.x) > 1):
 		sliding = true
-		show_dust()
+		show_dust(true)
 
 	if (sliding):
 		animator.play(\"slide\")
@@ -152,7 +154,7 @@ func _fixed_process(delta):
 				sliding = false
 				animator.play(\"rest\")
 	else:
-		hide_dust()
+		show_dust(false)
 
 	#Apply gravity force
 	velocity.y += delta * GRAVITY
@@ -175,16 +177,25 @@ func _fixed_process(delta):
 	######################
 	#    WEAPON LOGIC    #
 	######################
+	if (reload_triggered):
+		if (pistol.ammo_in_clip != pistol.clip_size):
+			if (ammo > 0):
+				if (ammo >= pistol.clip_size):
+					pistol.ammo_in_clip = pistol.clip_size
+				else:
+					pistol.ammo_in_clip = ammo
+				update_attributes(health, ammo, pistol.ammo_in_clip, special)
+		reload_triggered = false
 	if (crosshair_pos != null):
 		weapon_arm_root.look_at(crosshair_pos)
 	if (shot_triggered):
 		shot_triggered = false
-		if (ammo > 0):
+		if (ammo > 0 && pistol.ammo_in_clip > 0):
 			var shot_start = weapon_arm_hand.get_global_pos()
 			var space_state = get_world_2d().get_direct_space_state()
 			var shot_result = space_state.intersect_ray(shot_start, crosshair_pos, [ self ])
 			emit_signal(\"shot_fired\", shot_start, crosshair_pos, shot_result)
-			update_attributes(health, ammo - 1, special)
+			update_attributes(health, ammo - 1, pistol.ammo_in_clip - 1, special)
 
 ######################
 #  HELPER FUNCTIONS  #
@@ -203,23 +214,20 @@ func face(node, direction):
 		facing = \"left\"
 		set_scale(Vector2(-1,1))
 
-func show_dust():
-	get_node(\"slide_dust_r\").set_hidden(false)
-	get_node(\"slide_dust_l\").set_hidden(false)
-
-func hide_dust():
-	get_node(\"slide_dust_r\").set_hidden(true)
-	get_node(\"slide_dust_l\").set_hidden(true)
+func show_dust(shouldShow):
+	get_node(\"slide_dust_r\").set_hidden(!shouldShow)
+	get_node(\"slide_dust_l\").set_hidden(!shouldShow)
 	
 func stop_animation():
 	animator.stop(true)
 	animator.seek(0.0, true)
 
-func update_attributes(new_health, new_ammo, new_special):
+func update_attributes(new_health, new_ammo, new_ammo_in_pistol, new_special):
 	health = new_health
 	ammo = new_ammo
 	special = new_special
-	emit_signal(\"attributes_updated\", health, ammo, special)"
+	pistol.ammo_in_clip = new_ammo_in_pistol
+	emit_signal(\"attributes_updated\", health, ammo, pistol.ammo_in_clip, special)"
 
 [sub_resource type="Animation" id=3]
 
@@ -1041,13 +1049,12 @@ transform/pos = Vector2( -8.87243, -5.5806 )
 
 [node name="kinematic_body" type="KinematicBody2D" parent="."]
 
-editor/display_folded = true
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.0349861, -10.333 )
 shapes/0/trigger = false
 collision/layers = 1
-collision/mask = 1
+collision/mask = 5
 collision/margin = 0.08
 script/script = SubResource( 2 )
 

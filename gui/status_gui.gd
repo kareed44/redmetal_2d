@@ -13,7 +13,7 @@ func _enter_tree():
 	status_label = get_node("status_label")
 
 func on_player_shot_fired(start, end, victim):
-	if (victim != null):
+	if (victim.empty() == false):
 		status_label.set_text("Shot hit: " + str(victim))
 	else:
 		status_label.set_text("Shot missed!")

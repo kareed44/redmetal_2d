@@ -12,6 +12,7 @@ var player = null
 #Progress bars
 var health_bar = null
 var ammo_bar = null
+var ammo_total_label = null
 var special_bar = null
 
 #Weapons labels
@@ -20,21 +21,24 @@ var pistol_label = null
 func _enter_tree():
 	player = global.player
 	player.connect(\"attributes_updated\", self, \"on_player_attributes_updated\")
-	player.connect(\"pistol_updated\", self, \"on_player_pistol_updated\")
+	player.connect(\"pistol_equipped\", self, \"on_player_pistol_equipped\")
 	
 	health_bar = get_node(\"health_container/bar\")
 	ammo_bar = get_node(\"ammo_container/bar\")
+	ammo_total_label = get_node(\"ammo_container/label2\")
 	special_bar = get_node(\"special_container/bar\")
 	pistol_label = get_node(\"pistol_container/value\")
 
-func on_player_attributes_updated(health, ammo, special):
+func on_player_attributes_updated(health, ammo, ammo_in_pistol, special):
 	health_bar.set_val(health)
-	ammo_bar.set_val(ammo)
+	ammo_bar.set_val(ammo_in_pistol)
+	ammo_total_label.set_text(str(ammo))
 	special_bar.set_val(special)
 	update()
 
-func on_player_pistol_updated(pistol):
+func on_player_pistol_equipped(pistol):
 	pistol_label.set_text(pistol.name)
+	ammo_bar.set_max(pistol.clip_size)
 	update()"
 
 [node name="outer_container" type="VBoxContainer"]
@@ -60,7 +64,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 190.0
+margin/right = 212.0
 margin/bottom = 25.0
 alignment = 0
 
@@ -125,11 +129,11 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 29.0
-margin/right = 190.0
+margin/right = 212.0
 margin/bottom = 54.0
 alignment = 0
 
-[node name="label" type="Label" parent="ammo_container"]
+[node name="label1" type="Label" parent="ammo_container"]
 
 rect/min_size = Vector2( 45, 25 )
 focus/ignore_mouse = true
@@ -147,7 +151,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="seperator" type="VSeparator" parent="ammo_container"]
+[node name="seperator1" type="VSeparator" parent="ammo_container"]
 
 rect/min_size = Vector2( 3, 25 )
 focus/ignore_mouse = false
@@ -179,8 +183,38 @@ range/exp_edit = false
 range/rounded = false
 percent/visible = false
 
+[node name="seperator2" type="VSeparator" parent="ammo_container"]
+
+rect/min_size = Vector2( 3, 25 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 160.0
+margin/top = 0.0
+margin/right = 163.0
+margin/bottom = 25.0
+
+[node name="label2" type="Label" parent="ammo_container"]
+
+rect/min_size = Vector2( 45, 25 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 167.0
+margin/top = 0.0
+margin/right = 212.0
+margin/bottom = 25.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="special_container" type="HBoxContainer" parent="."]
 
+editor/display_folded = true
 rect/min_size = Vector2( 190, 25 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
@@ -188,7 +222,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 58.0
-margin/right = 190.0
+margin/right = 212.0
 margin/bottom = 83.0
 alignment = 0
 
@@ -253,7 +287,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 87.0
-margin/right = 190.0
+margin/right = 212.0
 margin/bottom = 112.0
 alignment = 0
 
@@ -287,66 +321,6 @@ margin/right = 52.0
 margin/bottom = 25.0
 
 [node name="value" type="Label" parent="pistol_container"]
-
-rect/min_size = Vector2( 100, 20 )
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 56.0
-margin/top = 2.0
-margin/right = 156.0
-margin/bottom = 23.0
-custom_fonts/font = ExtResource( 1 )
-custom_colors/font_color = Color( 0.144608, 0.0296631, 0.949219, 1 )
-text = "None"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="rifle_container" type="HBoxContainer" parent="."]
-
-editor/display_folded = true
-focus/ignore_mouse = false
-focus/stop_mouse = false
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 116.0
-margin/right = 190.0
-margin/bottom = 141.0
-alignment = 0
-
-[node name="label" type="Label" parent="rifle_container"]
-
-rect/min_size = Vector2( 45, 25 )
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 45.0
-margin/bottom = 25.0
-custom_fonts/font = ExtResource( 1 )
-text = "Rifle"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="separator" type="VSeparator" parent="rifle_container"]
-
-rect/min_size = Vector2( 3, 25 )
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 49.0
-margin/top = 0.0
-margin/right = 52.0
-margin/bottom = 25.0
-
-[node name="value" type="Label" parent="rifle_container"]
 
 rect/min_size = Vector2( 100, 20 )
 focus/ignore_mouse = true

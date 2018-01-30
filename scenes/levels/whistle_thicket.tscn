@@ -1,16 +1,17 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://sound/Wild_Western_Music_-_Tumbleweed_Town.ogg" type="AudioStream" id=1]
 [ext_resource path="res://scenes/derek/derek.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/effects/effects_manager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gui/status_gui.tscn" type="PackedScene" id=4]
 [ext_resource path="res://gui/attributes_gui.tscn" type="PackedScene" id=5]
-[ext_resource path="res://art/environment/dead_grass.png" type="Texture" id=6]
-[ext_resource path="res://art/environment/desert_background.png" type="Texture" id=7]
-[ext_resource path="res://gui/fonts/western.fnt" type="BitmapFont" id=8]
+[ext_resource path="res://art/objects/big_crate.png" type="Texture" id=6]
+[ext_resource path="res://art/environment/dead_grass.png" type="Texture" id=7]
+[ext_resource path="res://art/environment/desert_background.png" type="Texture" id=8]
 [ext_resource path="res://art/environment/wind.png" type="Texture" id=9]
 [ext_resource path="res://art/environment/tumbleweed.png" type="Texture" id=10]
-[ext_resource path="res://scenes/pickups/ammo_crate.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/environment/objects/beer_bottle.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/pickups/ammo_crate.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=1]
 
@@ -41,9 +42,14 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
+extents = Vector2( 391.918, 36.5564 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
 extents = Vector2( 588.836, 10 )
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=4]
 
 custom_solver_bias = 0.0
 radius = 10.0
@@ -74,7 +80,7 @@ autoplay = "tumbleweed"
 
 [node name="derek" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 339.184, 546.863 )
+transform/pos = Vector2( 77.6852, 545.755 )
 z/z = 1
 
 [node name="effects_manager" parent="." instance=ExtResource( 3 )]
@@ -85,7 +91,7 @@ editor/display_folded = true
 
 [node name="status_gui" parent="gui" instance=ExtResource( 4 )]
 
-margin/left = 815.0
+margin/left = 194.0
 margin/top = 7.0
 margin/right = 1015.0
 margin/bottom = 107.0
@@ -99,11 +105,95 @@ margin/bottom = 91.0
 
 [node name="environment" type="Node2D" parent="."]
 
+[node name="crate1" type="StaticBody2D" parent="environment"]
+
+editor/display_folded = true
+transform/pos = Vector2( 909.597, 559.927 )
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 0.0972551, 0, 0, 1, -1.10863, 1.75397 )
+shapes/0/trigger = false
+collision/layers = 2
+collision/mask = 3
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="floor_collider_shape" type="CollisionShape2D" parent="environment/crate1"]
+
+transform/pos = Vector2( -1.10863, 1.75397 )
+transform/scale = Vector2( 0.0972551, 1 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="sprite" type="Sprite" parent="environment/crate1"]
+
+transform/pos = Vector2( -1.27278, 3.10992 )
+texture = ExtResource( 6 )
+
+[node name="crate3" type="StaticBody2D" parent="environment"]
+
+editor/display_folded = true
+transform/pos = Vector2( 835.597, 559.927 )
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 0.0972551, 0, 0, 1, -1.10863, 1.75397 )
+shapes/0/trigger = false
+collision/layers = 2
+collision/mask = 3
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="floor_collider_shape" type="CollisionShape2D" parent="environment/crate3"]
+
+transform/pos = Vector2( -1.10863, 1.75397 )
+transform/scale = Vector2( 0.0972551, 1 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="sprite" type="Sprite" parent="environment/crate3"]
+
+transform/pos = Vector2( -1.27278, 3.10992 )
+texture = ExtResource( 6 )
+
+[node name="crate2" type="StaticBody2D" parent="environment"]
+
+editor/display_folded = true
+transform/pos = Vector2( 909.597, 485.927 )
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 0.0972551, 0, 0, 1, -1.10863, 1.75397 )
+shapes/0/trigger = false
+collision/layers = 2
+collision/mask = 3
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="floor_collider_shape" type="CollisionShape2D" parent="environment/crate2"]
+
+transform/pos = Vector2( -1.10863, 1.75397 )
+transform/scale = Vector2( 0.0972551, 1 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="sprite" type="Sprite" parent="environment/crate2"]
+
+transform/pos = Vector2( -1.27278, 3.10992 )
+texture = ExtResource( 6 )
+
 [node name="floor_collider" type="StaticBody2D" parent="environment"]
 
 editor/display_folded = true
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
+shapes/0/shape = SubResource( 3 )
 shapes/0/transform = Matrix32( 0.876967, 0, 0, 1, 510.184, 609.896 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -117,50 +207,56 @@ bounce = 0.0
 
 transform/pos = Vector2( 510.184, 609.896 )
 transform/scale = Vector2( 0.876967, 1 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
-[node name="dead_grass_2" type="Sprite" parent="environment"]
+[node name="back_stop" type="StaticBody2D" parent="environment"]
 
-transform/pos = Vector2( 299.489, 575 )
-texture = ExtResource( 6 )
+editor/display_folded = true
+input/pickable = false
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( -2.2896e-08, -0.5238, 1, -4.37114e-08, -12.59, 288.505 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="floor_collider_shape" type="CollisionShape2D" parent="environment/back_stop"]
+
+transform/pos = Vector2( -12.59, 288.505 )
+transform/rot = 90.0
+transform/scale = Vector2( 0.5238, 1 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
 
 [node name="dead_grass_1" type="Sprite" parent="environment"]
 
 transform/pos = Vector2( 458.489, 575 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
+
+[node name="dead_grass_2" type="Sprite" parent="environment"]
+
+transform/pos = Vector2( 299.489, 575 )
+texture = ExtResource( 7 )
 
 [node name="background" type="Sprite" parent="environment"]
 
+transform/pos = Vector2( 0, -1.32037 )
 z/z = -1
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 centered = false
-
-[node name="sign_danger" type="Label" parent="environment"]
-
-rect/scale = Vector2( 0.75, 0.75 )
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 426.0
-margin/top = 462.0
-margin/right = 484.0
-margin/bottom = 483.0
-custom_fonts/font = ExtResource( 8 )
-text = "Danger!"
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
 [node name="tumbleweed_root" type="StaticBody2D" parent="environment"]
 
 editor/display_folded = true
 transform/pos = Vector2( -150, 585 )
 input/pickable = false
-shapes/0/shape = SubResource( 3 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 2.39974, 0, 0, 2.39974, 34.4076, -10.6315 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -204,14 +300,20 @@ texture = ExtResource( 10 )
 
 transform/pos = Vector2( 34.4076, -10.6315 )
 transform/scale = Vector2( 2.39974, 2.39974 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
+[node name="beer_bottle_1" parent="environment" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 809.818, 505.94 )
+
 [node name="pickups" type="Node2D" parent="."]
 
-[node name="root" parent="pickups" instance=ExtResource( 11 )]
+transform/pos = Vector2( 61.0711, -118.441 )
 
-transform/pos = Vector2( 599.607, 562.594 )
+[node name="ammo_crate_1" parent="pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 848.434, 549.488 )
 
 

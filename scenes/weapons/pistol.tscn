@@ -4,7 +4,11 @@
 
 [sub_resource type="GDScript" id=1]
 
-script/source = "extends Sprite\n\nvar name = \'Little Pony\'"
+script/source = "extends Sprite
+
+var name = 'Little Pony'
+var clip_size = 6
+var ammo_in_clip = 6"
 
 [node name="sprite" type="Sprite"]
 
